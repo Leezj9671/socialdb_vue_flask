@@ -7,12 +7,10 @@ import re
 import json
 from itertools import islice
 from pymongo import MongoClient
-from conf.config import MongoDBconfig
+from conf.config import MongoDBConfig
 
-#获取mongodb客户端
-client = MongoClient(MongoDBconfig.g_server_ip, MongoDBconfig.g_server_port)
-#获取所要操作的数据库
-db = client[MongoDBconfig.g_db_name]
+client = MongoClient(MongoDBConfig.g_server_ip, MongoDBConfig.g_server_port)
+db = client[MongoDBConfig.g_db_name]
 
 def command_import(argv):
     point=0
@@ -60,12 +58,15 @@ def command_import(argv):
         
         for i in num:
             linedata[column[i]]=group[i]
+        
+        #warning: may cause errors.
+        if 'email' in column:
+            linedata['suffix_email'] = linedata['email'].split('@')[1]
 
         db.person.save(linedata)
 
     print('导入成功')
     data_file.close()
-    return '导入成功' 
 
 if __name__=='__main__':
     command_import(sys.argv)
