@@ -5,8 +5,8 @@ from hashlib import md5
 from string import digits, ascii_letters
 from random import randint, choice
 
-mail = ['@qq.com','@163.com','@gmail.com', '@hotmail.com']
-source = ['jd', 'qq', '163', 'cms']
+mail = ['@qq.com','@163.com','@gmail.com', '@hotmail.com', '@sina.com', '@gov.com']
+source = ['jd', 'qq', '163', 'cms', 'tb', 'wx']
 xtime = ['2016.2', '2016.3', '2017.1']
 
 def make_rnd_str(minLen=3, maxLen=10):
@@ -36,10 +36,7 @@ class gen_test:
                 data.append(str(randint(1000000,100000000)) + choice(mail))
                 data.append(choice(source))
                 data.append(choice(xtime))
-                print(data)
                 f.write(','.join(d for d in data) + '\n')
 
 if __name__ == '__main__':
-    gen_test.gen_test_csv('./test.csv', 100)
-                   
-            
+    gen_test.gen_test_csv('./test.csv', 1000000)

@@ -1,0 +1,15 @@
+aniso8601==1.2.1
+appdirs==1.4.3
+click==6.7
+Flask==0.12.1
+Flask-RESTful==0.3.5
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
+packaging==16.8
+pymongo==3.4.0
+pyparsing==2.2.0
+python-dateutil==2.6.0
+pytz==2017.2
+six==1.10.0
+Werkzeug==0.12.1

@@ -5,6 +5,7 @@
 import sys
 import re
 import json
+import datetime
 from itertools import islice
 from pymongo import MongoClient
 from conf.config import MongoDBConfig
@@ -32,6 +33,9 @@ def command_import(argv):
             except IOError:
                 print('数据文件打开失败')
                 return '数据文件打开失败'
+
+    starttime = datetime.datetime()
+
     columns=[]
     
     for column in json_file:
@@ -64,8 +68,10 @@ def command_import(argv):
             linedata['suffix_email'] = linedata['email'].split('@')[1]
 
         db.person.save(linedata)
+    
+    endtime = datetime.datetime.now()
 
-    print('导入成功')
+    print('导入成功，时间为{}s.'.format(endtime - starttime))
     data_file.close()
 
 if __name__=='__main__':
