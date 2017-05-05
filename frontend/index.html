@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>查询系统</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="./vue.js"></script>        
+    </head>
+    <body class="page">
+        <div class="navbar">
+
+        </div>        
+        <div class="main">
+            <h2>搜索信息:</h2>
+            <select v-model="selected">
+                <option v-for="option in options" v-bind:value="option.value">
+                    {{ option.text }}
+                </option>
+            </select>
+            <input
+                placeholder="请输入相关信息,输入回车键进行搜索"
+                type="text"
+                class="searchInput" 
+                v-on:keyup.enter="search"
+            />
+            <div class="dataform">
+                <h2 v-show="retItems.length">输入数据如下:</h2>
+                <table class="formdata">
+                    <thead>
+                    <tr>
+                        <th>用户名</th>
+                        <th>邮箱</th>
+                        <th>密码</th>
+                        <th>hash密码</th>
+                        <th>来源</th>
+                        <th>泄漏时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in retItems">
+                            <td>{{ item.user}}</td>
+                            <td>{{ item.email}}</td>
+                            <td>{{ item.password}}</td>
+                            <td>{{ item.passwordHash}}</td>
+                            <td>{{ item.source}}</td>
+                            <td>{{ item.xtime }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="analysis">
+            <h2>当前数据库分析:</h2>
+            <button type="text" v-on="flashAnalysis">刷新</button> 
+            <div>
+                
+            </div>
+        </div>
+    </body>
+    <script src="./test.js"></script>
+</html>

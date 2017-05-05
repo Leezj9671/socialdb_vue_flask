@@ -1,0 +1,43 @@
+body            { font-family: sans-serif; background: #eee; }
+a, h1, h2       { color: #000; }
+h1, h2          { font-family: 'PingFang SC', serif; margin-top: 1em; }
+h1              { border-bottom: 2px solid #eee; }
+h2              { font-size: 1.2em; }
+
+
+.page           { margin: 2em auto; width: 50em; border: 1px solid #ccc;
+                  padding: 1.5em; background: white; }
+.searchInput    { width: 30em }
+table.formdata{
+    border:1px solid #000; 
+    border-collapse:collapse; 
+    font-family:Arial; 
+} 
+table.formdata caption{       /*����*/ 
+    text-align:middle; 
+    width:700px;
+    padding-bottom:6px; 
+} 
+table.formdata th{           /*���б���*/ 
+    border:1px solid #000; 
+    background-color:#E2E2E2; 
+    color:#000000; 
+    text-align:left; 
+    font-weight:normal; 
+    padding:2px 8px 2px 6px; 
+    margin:0px; 
+} 
+table.formdata td{
+    border:1px solid #000;   /* ��Ԫ���߿� */ 
+}
+table.formdata th, td {
+ min-width: 0.1em;
+ padding: 10px 20px;
+}
+table.formdata input{          /*������������ʽ*/ 
+    width:100px;
+    padding:1px 3px 1px 3px; 
+    margin:0px; 
+    border:none;                /* ��������Ҫ�߿� */ 
+    font-family:Arial; 
+}
