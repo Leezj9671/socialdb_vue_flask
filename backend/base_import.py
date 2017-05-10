@@ -34,7 +34,7 @@ def command_import(argv):
                 print('数据文件打开失败')
                 return '数据文件打开失败'
 
-    starttime = datetime.datetime()
+    starttime = datetime.datetime.now()
 
     columns=[]
     
@@ -71,7 +71,7 @@ def command_import(argv):
     
     endtime = datetime.datetime.now()
 
-    print('导入成功，时间为{}s.'.format(endtime - starttime))
+    print(u'导入成功，时间为{}s.'.format(endtime - starttime))
     data_file.close()
 
 if __name__=='__main__':
