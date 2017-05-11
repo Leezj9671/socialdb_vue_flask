@@ -3,20 +3,50 @@ api
 '''
 
 from pymongo import MongoClient
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_restful import Api, Resource
+from werkzeug.datastructures import Headers
 from conf.config import MongoDBConfig
 
 app = Flask(__name__)
 client = MongoClient(MongoDBConfig.g_server_ip ,MongoDBConfig.g_server_port)
 db = client[MongoDBConfig.g_db_name]
 
+class AResponse(Response):
+    '''为解决跨域请求的相应类'''
+    def __init__(self, response=None, **kwargs):
+        kwargs['headers'] = ''
+        headers = kwargs.get('headers')
+        # 跨域控制 
+        origin = ('Access-Control-Allow-Origin', '*')
+        methods = ('Access-Control-Allow-Methods', 'HEAD, OPTIONS, GET, POST, DELETE, PUT')
+        if headers:
+            headers.add(*origin)
+            headers.add(*methods)
+        else:
+            headers = Headers([origin, methods])
+        kwargs['headers'] = headers
+        return super().__init__(response, **kwargs)
+
+# def response_cors(data=None, status=None):
+#     '''为返回的json格式进行跨域请求'''
+#     if data:
+#         resp = jsonify({"status": status, "data": data})
+        
+#     else:
+#         resp = jsonify({"status": status, "data":})
+
+#     resp.headers['Access-Control-Allow-Origin'] = '*'
+#     return resp
+
 class Person(Resource):
     '''人员类'''
     def get(self, user=None, email=None, password=None, passwordHash=None, source=None, xtime=None):
         #data用于存储获取到的信息
+
         data = []
 
+        #待改进
         if user:
             persons_info = db.person.find({"user": user}, {"_id": 0})
             
@@ -36,7 +66,7 @@ class Person(Resource):
             persons_info = db.person.find({"xtime": xtime}, {"_id": 0})            
             
         else:
-            #此处限制只能查询10个
+            #限制只能查询10个
             persons_info = db.person.find({}, {"_id": 0, "update_time": 0}).limit(10)
  
         for person in persons_info:
@@ -114,3 +144,4 @@ api.add_resource(Analysis, "/api/analysis/<string:type_analyze>", endpoint="type
 
 if __name__ == '__main__':
     app.run(debug=True)
+    app.response_class = AResponse
