@@ -12,32 +12,29 @@ app = Flask(__name__)
 client = MongoClient(MongoDBConfig.g_server_ip ,MongoDBConfig.g_server_port)
 db = client[MongoDBConfig.g_db_name]
 
-class AResponse(Response):
-    '''为解决跨域请求的相应类'''
-    def __init__(self, response=None, **kwargs):
-        kwargs['headers'] = ''
-        headers = kwargs.get('headers')
-        # 跨域控制 
-        origin = ('Access-Control-Allow-Origin', '*')
-        methods = ('Access-Control-Allow-Methods', 'HEAD, OPTIONS, GET, POST, DELETE, PUT')
-        if headers:
-            headers.add(*origin)
-            headers.add(*methods)
-        else:
-            headers = Headers([origin, methods])
-        kwargs['headers'] = headers
-        return super().__init__(response, **kwargs)
+# class AResponse(Response):
+#     '''为解决跨域请求的相应类'''
+#     def __init__(self, response=None, **kwargs):
+#         kwargs['headers'] = ''
+#         headers = kwargs.get('headers')
+#         # 跨域控制 
+#         origin = ('Access-Control-Allow-Origin', '*')
+#         methods = ('Access-Control-Allow-Methods', 'HEAD, OPTIONS, GET, POST, DELETE, PUT')
+#         if headers:
+#             headers.add(*origin)
+#             headers.add(*methods)
+#         else:
+#             headers = Headers([origin, methods])
+#         kwargs['headers'] = headers
+#         return super().__init__(response, **kwargs)
 
-# def response_cors(data=None, status=None):
-#     '''为返回的json格式进行跨域请求'''
-#     if data:
-#         resp = jsonify({"status": status, "data": data})
-        
-#     else:
-#         resp = jsonify({"status": status, "data":})
+def response_cors(data=None, status=None):
+    '''为返回的json格式进行跨域请求'''
+    if data:
+        resp = jsonify({"status": status, "data": data})
 
-#     resp.headers['Access-Control-Allow-Origin'] = '*'
-#     return resp
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 class Person(Resource):
     '''人员类'''
@@ -74,9 +71,9 @@ class Person(Resource):
 
         #判断有无数据返回 
         if data:
-            return jsonify({"status": "ok", "data": data})
+            return response_cors(data, "ok")
         else:
-            return jsonify({"status": "not found", "data": ""})
+            return response_cors(data, "not found")
             
     def post(self):
         '''
@@ -124,10 +121,12 @@ class Analysis(Resource):
         '''
         if type_analyze in ["source", "xtime", "suffix_email"]:
             pipeline = [{"$group" : {"_id" : '$'+type_analyze, "sum" : {"$sum" : 1}}}]
-            return jsonify({"status": "ok", "sum": db.person.find().count(), "data": list(db.person.aggregate(pipeline))})
+            return response_cors(list(db.person.aggregate(pipeline)), "ok")
+            #return jsonify({"status": "ok", "sum": db.person.find().count(), "data": })
 
         else:
-            return jsonify({"status":"error", "response":"use /api/analysis/[source, xtime, suffix_email] to get analysis data."})
+            return response_cors("use /api/analysis/[source, xtime, suffix_email] to get analysis data.", "error")
+            #return jsonify({"status":"error", "response":"use /api/analysis/[source, xtime, suffix_email] to get analysis data."})
         
 #添加api资源
 api = Api(app)
