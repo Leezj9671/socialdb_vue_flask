@@ -32,7 +32,8 @@ def response_cors(data=None, status=None):
     '''为返回的json格式进行跨域请求'''
     if data:
         resp = jsonify({"status": status, "data": data})
-
+    else:
+        resp = jsonify({"status": status})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -134,13 +135,13 @@ api.add_resource(Person, "/api/find")
 #do better
 api.add_resource(Person, "/api/find/user/<string:user>", endpoint="user")
 api.add_resource(Person, "/api/find/email/<string:email>", endpoint="email")
-api.add_resource(Person, "/api/find/pwd/<string:password>", endpoint="password")
-api.add_resource(Person, "/api/find/pwdHash/<string:passwordHash>", endpoint="passwordHash")
+api.add_resource(Person, "/api/find/password/<string:password>", endpoint="password")
+api.add_resource(Person, "/api/find/passwordHash/<string:passwordHash>", endpoint="passwordHash")
 api.add_resource(Person, "/api/find/source/<string:source>", endpoint="source")
 api.add_resource(Person, "/api/find/time/<string:xtime>", endpoint="xtime")
 ###
 api.add_resource(Analysis, "/api/analysis/<string:type_analyze>", endpoint="type_analyze")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
     #app.response_class = AResponse
