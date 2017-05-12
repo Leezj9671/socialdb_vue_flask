@@ -4,7 +4,7 @@
         <button v-for="key in analysisItems" v-bind:value="key.value" @click="flashAnalysis(key.value)">
             {{ key.text}}
         </button>
-        <div id="chartArea" style="width: 600px;height:400px;"></div>
+        <div id="chartArea" style="width: 600px;height:400px;text-align:center" ></div>
     </div>
 </template>
 
@@ -129,8 +129,3 @@ export default {
 }
 </script>
 
-<style>
-.chartArea {
-    text-align: center;
-}
-</style>

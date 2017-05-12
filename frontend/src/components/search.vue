@@ -112,7 +112,7 @@ table{
 .container {
   text-align: center;
   overflow: hidden;
-  width: 800px;
+  width: 60em;
   margin: 0 auto;
 }
 
@@ -120,6 +120,9 @@ table{
   width: 100%;
 }
 
+.container td {
+    font-size: 10px;
+}
 .container td, .container th {
   overflow: auto;
   padding: 10px;
