@@ -143,4 +143,4 @@ api.add_resource(Analysis, "/api/analysis/<string:type_analyze>", endpoint="type
 
 if __name__ == '__main__':
     app.run(debug=True)
-    app.response_class = AResponse
+    #app.response_class = AResponse
