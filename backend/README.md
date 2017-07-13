@@ -5,7 +5,7 @@ Just a backend, shabby a little bit but it can run:>
 ## Database structure
 - _id: MongoDB ID
 - email: Email Address like 85378639@gmail.com
-- password
+- password: password
 - passwordHash: Hash(password）
 - source: data source
 - suffix_email: the suffix of email like "@gmail.com"
@@ -30,8 +30,8 @@ cd /usr/local/mongodb/bin/
 # ./mongo
 ```
 - On windows
--- Find and Download packages in http://www.mongodb.org/downloads
--- Then install *.msi, simply enough.
+- - Find and Download packages in http://www.mongodb.org/downloads
+- - Then install *.msi, simply enough.
 
 ## Mongodb things
 ```bash
