@@ -1,7 +1,6 @@
 <template>
   <div class="Search">
-    <h1>A Database</h1>
-    <select v-model="selected">
+    <select v-model="selected" class="Select">
         <option v-for="option in options" v-bind:value="option.value">
             {{ option.text }}
         </option>
@@ -15,26 +14,25 @@
     />
     <h2 v-show="errorinfo">暂无数据，请重新输入</h2>
     <div class="container" v-show="retItems.length">
-        <h2>返回数据如下:</h2>
-        <table style="table-layout:fixed">
+        <table>
             <thead>
             <tr>
                 <th>用户名</th>
                 <th>邮箱</th>
-                <th>密码</th>
-                <th>hash密码</th>
                 <th>来源</th>
                 <th>泄漏时间</th>
+                <th>密码</th>
+                <th>hash密码</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="item in retItems">
                     <td>{{ item.user}}</td>
                     <td>{{ item.email}}</td>
-                    <td>{{ item.password}}</td>
-                    <td>{{ item.passwordHash}}</td>
                     <td>{{ item.source}}</td>
                     <td>{{ item.xtime }}</td>
+                    <td>{{ item.password}}</td>
+                    <td>{{ item.passwordHash}}</td>
                 </tr>
             </tbody>
         </table>
@@ -45,7 +43,7 @@
 <script>
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://123.207.89.91:5000/api';
+axios.defaults.baseURL = 'http://127.0.0.1:5000/api';
 
 export default {
   name: 'Search',
@@ -56,9 +54,9 @@ export default {
       errorinfo: '',
       options: [
         { text: '用户名', value: 'user' },
-        { text: '密码', value: 'pwd' },
+        { text: '密码', value: 'password' },
         { text: '邮箱', value: 'email' },
-        { text: '哈希密码', value: 'pwdHash' }        
+        { text: '哈希密码', value: 'passwordHash' }        
       ],
       retItems: [],
       analysisInfos: [],
@@ -87,10 +85,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 
 h1, h2 {
   font-weight: normal;
+}
+
+h1 {
+  color: #fff;
 }
 
 ul {
@@ -104,9 +106,11 @@ li {
 }
 
 table{
-    border:1px solid #000; 
-    border-collapse:collapse; 
-    font-family:Arial; 
+    margin-top: 2em;
+    border:1px solid none;
+    padding: 20px;
+    border-collapse: collapse;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 } 
 
 .container {
@@ -134,4 +138,27 @@ table{
   width: 30px;
 }
 
+select {
+    border: none;
+}
+
+.searchInput {
+    outline: none;
+    height: 30px;
+    width: 680px;
+    border : 1px solid  #FFFFFF;
+    padding : 15px 30px 15px 30px;
+    font-size: 1em;
+    font-family: BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+.searchInput:focus {
+    box-shadow: 2px 2px 2px #336633;
+}
+.Select {
+    height: 62px;
+    width: 100px;
+    border : 1px solid  #FFFFFF;
+    font-size: 1em;
+    font-family: BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 </style>

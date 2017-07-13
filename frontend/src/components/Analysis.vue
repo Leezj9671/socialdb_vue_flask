@@ -1,10 +1,12 @@
 <template>
     <div class="analysis">
-        <h2>当前数据库分析:</h2>
-        <button v-for="key in analysisItems" v-bind:value="key.value" @click="flashAnalysis(key.value)">
-            {{ key.text}}
-        </button>
-        <div id="chartArea" style="width: 600px;height:400px;text-align:center" ></div>
+        <h2>Database Analysis</h2>
+        <div class="button-group">
+            <button v-for="key in analysisItems" v-bind:value="key.value" @click="flashAnalysis(key.value)" type="button" class="button button-pill button-action">
+                {{ key.text}}
+            </button>
+        </div>
+        <div id="chartArea" style="margin: 0 auto; width: 600px; height:400px;"></div>
     </div>
 </template>
 
@@ -12,7 +14,7 @@
 import axios from 'axios'
 import echarts from 'echarts'
 
-axios.defaults.baseURL = 'http://123.207.89.91:5000/api';
+axios.defaults.baseURL = 'http://127.0.0.1:5000/api';
 var myChart = null;
 
 var options = ({
@@ -106,11 +108,6 @@ export default {
                         "name": item["_id"]
                     })
                 }
-                // options.series.push({
-                //         name: '来源',
-                //         type: 'pie',
-                //         data: this.analysisData
-                // })
                 myChart.setOption({
                     series: {
                         name: '来源',
@@ -129,3 +126,17 @@ export default {
 }
 </script>
 
+<style>
+@import url(http://www.bootcss.com/p/buttons/css/buttons.css);
+.analysis {
+    text-align: center;
+}
+.button-action {
+    background-color: #339966;
+    border-color: #339966;
+}
+.button-action:hover, focus {
+    background-color: #339999;
+    border-color: #339999;
+}
+</style>
