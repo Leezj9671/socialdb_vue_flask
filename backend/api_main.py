@@ -129,17 +129,16 @@ class Analysis(Resource):
             return response_cors("use /api/analysis/[source, xtime, suffix_email] to get analysis data.", "error")
             #return jsonify({"status":"error", "response":"use /api/analysis/[source, xtime, suffix_email] to get analysis data."})
         
-#添加api资源
+# 添加api资源
 api = Api(app)
 api.add_resource(Person, "/api/find")
-#do better
+# do better
 api.add_resource(Person, "/api/find/user/<string:user>", endpoint="user")
 api.add_resource(Person, "/api/find/email/<string:email>", endpoint="email")
 api.add_resource(Person, "/api/find/password/<string:password>", endpoint="password")
 api.add_resource(Person, "/api/find/passwordHash/<string:passwordHash>", endpoint="passwordHash")
 api.add_resource(Person, "/api/find/source/<string:source>", endpoint="source")
 api.add_resource(Person, "/api/find/time/<string:xtime>", endpoint="xtime")
-###
 api.add_resource(Analysis, "/api/analysis/<string:type_analyze>", endpoint="type_analyze")
 
 if __name__ == '__main__':

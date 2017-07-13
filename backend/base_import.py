@@ -14,30 +14,30 @@ client = MongoClient(MongoDBConfig.g_server_ip, MongoDBConfig.g_server_port)
 db = client[MongoDBConfig.g_db_name]
 
 def command_import(argv):
-    point=0
+    point = 0
     while point < 4:
-        point+=1
+        point += 1
         if argv[point]=='-format':
             try:
                 with open(argv[point+1],'r') as f:
-                    json_file=json.load(f)
-                point+=1
+                    json_file = json.load(f)
+                point += 1
             except IOError:
                 print('格式文件打开失败')
                 return '格式文件打开失败'
         if argv[point]=='-f':
             try:
-                fname=argv[point+1]
+                fname=argv[point + 1]
                 data_file=open(fname,'r')
-                point+=1
+                point += 1
             except IOError:
                 print('数据文件打开失败')
                 return '数据文件打开失败'
 
     starttime = datetime.datetime.now()
 
-    columns=[]
-    
+    columns = []
+
     for column in json_file:
         columns.append(json_file[column])
 
@@ -46,7 +46,7 @@ def command_import(argv):
     column = data_file.readline().strip('\n').split(fenge)
 
     #判定json格式中所需要的数据项
-    num=[]
+    num = []
     t = 0
     for i in column:
         if i in columns:
@@ -61,7 +61,7 @@ def command_import(argv):
         group=line.split(fenge)
         
         for i in num:
-            linedata[column[i]]=group[i]
+            linedata[column[i]] = group[i]
         
         #warning: may cause errors.
         if 'email' in column:
