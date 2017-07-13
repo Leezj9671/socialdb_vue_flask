@@ -138,4 +138,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 backend/test/test.csv
-backend/test/test.csv
+backend/backend_env
+front/
