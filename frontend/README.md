@@ -22,3 +22,7 @@ npm run dev
 ```
 
 For detailed explanation on how things work, please connect to leezj9671@gmail.com or commit a issue. :>
+
+## Modify IP address
+- Analysis.vue => axios.defaults.baseURL='[backend IP]'
+- search.vue => axios.defaults.baseURL='[backend IP]'
