@@ -1,4 +1,4 @@
-# vue_fronted
+# vue_frontend
 
 > A frontend used by vue.js 
 
