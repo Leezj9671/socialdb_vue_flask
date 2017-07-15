@@ -10,79 +10,44 @@
     </div>
 </template>
 
-<script>
-import axios from 'axios'
-import echarts from 'echarts'
 
-axios.defaults.baseURL = 'http://127.0.0.1:5000/api';
+<script>
+// import axios from 'axios'
+// import echarts from '//cdn.bootcss.com/echarts/3.2.2/echarts.simple.min.js'
+// var echarts = require('echarts/lib/echarts');
+// require('echarts/lib/chart/pie')
+// require('echarts/lib/component/tooltip');
+
+axios.defaults.baseURL = 'http://123.207.89.91:5000/api';
 var myChart = null;
 
-var options = ({
-    backgroundColor: 'white',
+// var options = ({
+//     backgroundColor: 'white',
 
-    title: {
-        text: '数据分析',
-        left: 'middle',
-        top: 20,
-        textStyle: {
-            color: '#ccc'
-        }
-    },
+//     tooltip : {
+//         trigger: 'item',
+//         formatter: "{a} {b}: {c} ({d}%)"
+//     },
 
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-
-    visualMap: {
-        show: false,
-        min: 80,
-        max: 600,
-        inRange: {
-            colorLightness: [0, 1]
-        }
-    },
-    series : [
-        {
-            name:'来源',
-            type:'pie',
-            radius : '55%',
-            center: ['50%', '50%'],
-            data:[],
-            roseType: 'radius',
-            label: {
-                normal: {
-                    textStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    lineStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)'
-                    },
-                    smooth: 0.2,
-                    length: 10,
-                    length2: 20
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#c23531',
-                    shadowBlur: 200,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            },
-
-            animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay: function (idx) {
-                return Math.random() * 200;
-            }
-        }
-    ]
-})
+//     visualMap: {
+//         show: true,
+//         min: 80,
+//         max: 600,
+//         inRange: {
+//             colorLightness: [0, 1]
+//         }
+//     },
+//     series: [
+//         {
+//             name:'来源',
+//             type:'pie',
+//             radius : '55%',
+//             center: ['50%', '50%'],
+//             data:[],
+//             roseType: 'radius',
+//         }
+//     ]
+// })
 
 export default {
   name:'analysis',
@@ -98,6 +63,10 @@ export default {
   },
   methods:{
     flashAnalysis: function (value) {
+        myChart = echarts.init(document.getElementById('chartArea'));
+        myChart.showLoading({
+            text: "数据获取ing...",
+        });
         axios.get('/analysis/'+value).then(response => {
             if(response.data.status === 'ok'){
                 this.analysisData = [];
@@ -108,21 +77,28 @@ export default {
                         "name": item["_id"]
                     })
                 }
+                myChart.hideLoading();
                 myChart.setOption({
+                    tootip: {
+                        show: true,
+                        trigger: 'item',
+                        formatter: "{a} {b}: {c} ({d}%)"
+                    },
                     series: {
                         name: '来源',
                         type: 'pie',
                         data: this.analysisData
                     }
                 });
+
             }
         })
         .catch(error => { console.log(error); })
         }
     },
-    mounted(){
-        myChart = echarts.init(document.getElementById('chartArea'));
-    }
+    // mounted(){
+    //     myChart = echarts.init(document.getElementById('chartArea'));
+    // }
 }
 </script>
 
