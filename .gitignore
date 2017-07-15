@@ -138,3 +138,5 @@ $RECYCLE.BIN/
 backend/test/test.csv
 backend/backend_env
 front/
+*.pdf
+plan.md
