@@ -1,7 +1,7 @@
 <template>
   <div class="Search">
     <select v-model="selected" class="Select">
-        <option v-for="option in options" v-bind:value="option.value">
+        <option v-for="option in options" v-bind:value="option.value" class="options">
             {{ option.text }}
         </option>
     </select>
@@ -41,9 +41,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-axios.defaults.baseURL = 'http://127.0.0.1:5000/api';
+// import axios from 'axios'
 
 export default {
   name: 'Search',
@@ -137,11 +135,6 @@ table{
   position: relative;
   width: 30px;
 }
-
-select {
-    border: none;
-}
-
 .searchInput {
     outline: none;
     height: 30px;
@@ -160,5 +153,12 @@ select {
     border : 1px solid  #FFFFFF;
     font-size: 1em;
     font-family: BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    outline: none;
+    border: none;
+    padding: 0 0 0 10px;
+}
+.Select .options {
+    outline: none;
+    border: none;
 }
 </style>
