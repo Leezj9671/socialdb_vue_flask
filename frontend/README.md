@@ -1,4 +1,4 @@
-# vue_frontend
+# Frontend
 
 > A frontend used by vue.js 
 
@@ -14,15 +14,17 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 # install dependencies
 npm install
-npm install axios
-npm install echarts
+# Because of using CDN, now you can ignore it.
+# Or you can using command below in development mode. Decide on you.
+# But you must to change some import setence in *.vue
+~~npm install axios~~
+~~npm install echarts~~
 
 # serve with hot reload at localhost:8080
 npm run dev
 ```
 
-For detailed explanation on how things work, please connect to leezj9671@gmail.com or commit a issue. :>
-
 ## Modify IP address
-- Analysis.vue => axios.defaults.baseURL='[backend IP]'
-- search.vue => axios.defaults.baseURL='[backend IP]'
+- App.vue => axios.defaults.baseURL='[backend IP]'
+
+For detailed explanation on how these things work, please connect to leezj9671@gmail.com or commit an issue. :>
