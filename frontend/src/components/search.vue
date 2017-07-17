@@ -37,12 +37,20 @@
             </tbody>
         </table>
 
-        <div v-show="datacnts>10">
+        <div v-show="datacnts>10" class="pageselect">
             <select class="showpages" @change="changepages" v-model="selectedP">
                 <option v-for="opt in pageoptions" v-bind:value="opt.value" class="options">
                     {{ opt.text }}
                 </option>
             </select>
+            <p>每页显示数据条数：
+                <input 
+                    type="int"
+                    class="limitInput" 
+                    v-model="limit"
+                    v-on:keyup.enter="changepages"
+                />
+            </p>
         </div>
         <p v-model="datacnts">查询结果有 {{ datacnts }} 条数据</p>
     </div>
@@ -77,6 +85,8 @@ export default {
   methods:{
         search: function () {
             this.pageoptions = [];
+            this.limit = 10;
+            this.selectedP = 1;
             this.errorinfo = '';
             axios.get('/find/'+ this.selected + '/' + this.searchStr)
                 .then(response => {
@@ -86,7 +96,7 @@ export default {
                         this.searchStr = '';
                         this.datacnts = response.data.datacounts;
                         var n = 0;
-                        while ( n < parseInt(this.datacnts/this.limit)+1) {
+                        while ( n < Math.ceil(this.datacnts/this.limit)) {
                             n = n + 1;
                             this.pageoptions.push({
                                 text: '第 ' +  n + ' 页',
@@ -106,9 +116,18 @@ export default {
                 });
         },
         changepages: function() {
-            axios.get('/find/'+ this.selected + '/' + this.pageStr + '?skip=' + this.limit * (this.selectedP-1))
+            axios.get('/find/'+ this.selected + '/' + this.pageStr + '?limit=' + this.limit + '&skip=' + this.limit * (this.selectedP-1))
                 .then(response => {
                     if(response.data.status === 'ok'){
+                        this.pageoptions = [];
+                        var n = 0;
+                        while ( n <  Math.ceil(this.datacnts/this.limit)) {
+                            n = n + 1;
+                            this.pageoptions.push({
+                                text: '第 ' +  n + ' 页',
+                                value: n
+                            });
+                        }
                         this.retItems = response.data.data.concat();
                         this.searchStr = '';
                         this.datacnts = response.data.datacounts;
@@ -194,6 +213,18 @@ table{
 .searchInput:focus {
     box-shadow: 2px 2px 2px #336633;
 }
+.limitInput {
+    outline: none;
+    height: 15px;
+    width: 20px;
+    border : 1px solid  #FFFFFF;
+    padding : 5px 5px 5px 5px;
+    font-size: 1em;
+    font-family: BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+.limitInput:focus {
+    box-shadow: 2px 2px 2px #336633;
+}
 .Select {
     border : 1px solid  #FFFFFF;
     font-size: 1em;
@@ -220,5 +251,7 @@ table{
     position: relative;
     margin: 0 auto;
     margin-top: 1em;
+}
+.pageselect input{
 }
 </style>
