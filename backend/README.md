@@ -2,6 +2,14 @@
 ## Introduction
 Just a backend, shabby a little bit but it can run:>
 
+## RESTful API
+- /api/find
+- /api/find/user/[arg]?limit=[int]&skip=[int]
+- /api/find/email/[arg]?limit=[int]&skip=[int]
+- /api/find/password/[arg]?limit=[int]&skip=[int]
+- /api/find/passwordHash/[arg]?limit=[int]&skip=[int]
+- /api/analysis/[source, xtime, suffix_email]
+
 ## Database structure
 - _id: MongoDB ID
 - email: Email Address like 85378639@gmail.com
