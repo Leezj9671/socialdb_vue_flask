@@ -26,5 +26,4 @@ npm run dev
 
 ## Modify IP address
 - App.vue => axios.defaults.baseURL='[backend IP]'
-
 For detailed explanation on how these things work, please connect to leezj9671@gmail.com or commit an issue. :>
