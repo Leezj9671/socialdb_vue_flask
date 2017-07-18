@@ -33,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       compress: {
         warnings: false
       },
-      sourceMap: true
+      sourceMap: false  
     }),
     // extract css into its own file
     new ExtractTextPlugin({
@@ -81,7 +81,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
-      chunks: ['vendor']
+      chunks: ['vendor'],
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
@@ -90,7 +90,15 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+            warnings: false
+        },
+        // 排除关键字，不能混淆
+        except:['$','exports','require']
+    })
   ]
 })
 
