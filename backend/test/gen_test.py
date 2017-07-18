@@ -8,6 +8,7 @@ from random import randint, choice
 mail = ['@qq.com','@163.com','@gmail.com', '@hotmail.com', '@sina.com', '@gov.com']
 source = ['jd', 'qq', '163', 'cms', 'tb', 'wx']
 xtime = ['2016.2', '2016.3', '2017.1']
+gen_num = 500
 
 def make_rnd_str(minLen=3, maxLen=10):
     '''
@@ -39,4 +40,4 @@ class gen_test:
                 f.write(','.join(d for d in data) + '\n')
 
 if __name__ == '__main__':
-    gen_test.gen_test_csv('./test.csv', 1000000)
+    gen_test.gen_test_csv('./test.csv', gen_num)
