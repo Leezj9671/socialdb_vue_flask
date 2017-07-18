@@ -4,7 +4,7 @@ api
 - 并发请求时，且前一请求正在查询会导致卡死
 '''
 
-
+import time
 from pymongo import MongoClient
 from flask import Flask, request, jsonify, Response
 from flask_restful import Api, Resource, reqparse
@@ -106,6 +106,7 @@ class Person(Resource):
                 if db.person.find_one({"user": user, "email": email}, {"_id": 0}):
                     return {"response": "{{} {} already exists.".format(user, email)}
                 else:
+                    data.create_time = time.strftime('%Y%m%d',time.localtime(time.time()))
                     db.person.insert(data)
             else:
                 return redirect(url_for("person"))
@@ -116,7 +117,7 @@ class Person(Resource):
     #     根据user和email进行定位更新数据
     #     '''
     #     data = request.get_json()
-    #     db.person.update({'user': user, 'email': email},{'$set': data})
+    #     db.person.update({'user': user, 'email': email},{'$set': data},)
     #     return redirect(url_for("person"))
 
     # def delete(self, email):
@@ -134,9 +135,9 @@ class Analysis(Resource):
     def get(self, type_analyze):
         '''
         type为分析类型，包括邮箱后缀、泄漏来源、泄漏时间
-        type: [suffix_email, source, xtime]
+        type: [suffix_email, source, xtime, create_time]
         '''
-        if type_analyze in ["source", "xtime", "suffix_email"]:
+        if type_analyze in ["source", "xtime", "suffix_email", "create_time"]:
             pipeline = [{"$group" : {"_id" : '$'+type_analyze, "sum" : {"$sum" : 1}}}]
             return response_cors(list(db.person.aggregate(pipeline)), None, "ok")
             #return jsonify({"status": "ok", "sum": db.person.find().count(), "data": })

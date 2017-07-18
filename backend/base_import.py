@@ -6,6 +6,7 @@ import sys
 import re
 import json
 import datetime
+import time
 from itertools import islice
 from pymongo import MongoClient
 from conf.config import MongoDBConfig
@@ -54,11 +55,11 @@ def command_import(argv):
         t += 1
     
     for line in islice(data_file, 0, None):
-        if line=='\n':
+        if line == '\n':
             continue
-        linedata={}
-        line=line.strip('\n')
-        group=line.split(fenge)
+        linedata = {}
+        line = line.strip('\n')
+        group = line.split(fenge)
         
         for i in num:
             linedata[column[i]] = group[i]
@@ -66,7 +67,8 @@ def command_import(argv):
         #warning: may cause errors.
         if 'email' in column:
             linedata['suffix_email'] = linedata['email'].split('@')[1]
-
+        
+        linedata['create_time'] = time.strftime('%Y%m%d',time.localtime(time.time()))
         db.person.save(linedata)
     
     endtime = datetime.datetime.now()
