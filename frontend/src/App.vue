@@ -12,7 +12,8 @@
 <script>
     import search from './components/search.vue'
     import Analysis from './components/Analysis.vue'
-    axios.defaults.baseURL = 'http://localhost:5000/api';
+    // axios.defaults.baseURL = 'http://localhost:5000/api';
+    axios.defaults.baseURL = 'http://123.207.89.91:5000/api';
     export default {
         components: {
             search,
