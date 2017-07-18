@@ -29,7 +29,8 @@ export default {
         analysisItems: [
             {text: '来源', value: 'source'},
             {text: '泄露时间', value: 'xtime'},
-            {text: '邮箱后缀', value: 'suffix_email'}
+            {text: '邮箱后缀', value: 'suffix_email'},
+            {text: '导入时间', value: 'create_time'}
         ]
     }
   },
