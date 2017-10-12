@@ -2,6 +2,7 @@
 
 ## Backend
 - Using language: python 3.5
+- Using database: MongoDB
 - Requirements: pymongo, flask, Flask-RESTful
 
 ## Frontend
