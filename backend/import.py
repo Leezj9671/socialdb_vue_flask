@@ -116,11 +116,14 @@ def file_into_database(filename, split_sign, csv_sign, regex, cus, ids):
 def main(argv):
     format_file, data_file, data_path = check_opts(argv)
 
+    # 社工库本地地址
+    sgk_path = 'F:\\shegongku'
+
     columns = []
     try:
         with open(format_file,'r') as f:
             json_file = json.load(f)
-            #从json文件中的split确定分隔符
+            # 从json文件中的split确定分隔符
             split_sign = json_file["split"]
             csv_sign = json_file["strip_csv_tilte"]
             regex_pattern = json_file["regex"]
@@ -135,7 +138,7 @@ def main(argv):
     if data_file != '':
         file_into_database(data_file, split_sign, csv_sign, regex_pattern, custom_field, ids)
     elif data_path != '':
-        for fpathe,dirs,fs in os.walk('F:\\shegongku\\126'):
+        for fpathe,dirs,fs in os.walk(sgk_path):
             for f in fs:
                 file_into_database(os.path.join(fpathe,f), split_sign, csv_sign, regex_pattern, custom_field, ids)
 
